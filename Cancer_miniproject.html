@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Major Cancer Treatment Centers in Kenya</title>
+  <!-- Add Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <!-- Add Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <!-- Set map dimensions with CSS -->
+  <style>
+    #map {
+      height: 400px;
+    }
+	 .navbar {
+        background-color: #eeccee;
+        overflow: hidden;
+        }
+        .navbar .logo {
+        text-align: center;  
+        float: inline-start;
+        font-size: 40px;
+        font-weight: bold;
+        font-family:  Verdana, Geneva, Tahoma, sans-serif 
+        padding: 16px 18px;
+        color: rgb(143, 63, 180);
+        text-decoration: none;
+    }
+    
+        #description {
+      text-align: left;
+      margin-top: 5px;
+      float: inline-start;
+      background: #eeccee;
+      font-size: 15px;
+      font-weight: bold;
+      padding: 10px;
+      color: rgb(143, 63, 180);
+      font-family:  Verdana, Geneva, Tahoma, sans-serif 
+      
+      text-decoration: none;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <h1>Major Cancer Treatment Centers</h1>
+  <h2>This map shows locations of some of the cancer treatment centers, oncology hospitals and screening facilities in Kenya and the services they offer.</h2>
+  <div id="map"></div>
+<div class="footer">
+    <p>&copy; ENC221-0102/2018</p>
+  </div>
+  <script>
+    // Data for the cancer treatment centers
+    const centers = [
+      {
+        name: "Texas Cancer Center",
+        Lat_Long: [-1.3077,36.8033],
+        description: "Texas Cancer Centre offers holistic treatment to cancer patients using a treatment approach that focuses on cancer screening and creating awareness, chemotherapy, linear accelerator radiotherapy, palliative care and 24 hours inpatient care.",
+        locale: "Mbagathi way, Nairobi"
+      },
+	  {
+        name: "Eldoret hospital comprehensive cancer center",
+        Lat_Long: [0.5165579106981885, 35.279839233995055],
+        description: "oncology consultations,  chemotherapy services and 24-hour in-hospital care when needed. It opened  its comprehensive radiotherapy department and offers high-dose rate brachytherapy with a new and modern afterloader. Additional specialized treatment techniques will be added as required in future.",
+        locale: "Cnr Uganda & Makasemba Roads, Eldoret New Theatre Building Langas Kapseret"
+      },
+      {
+        name: "Pathologists Lancet Laboratory",
+        Lat_Long: [-1.2959128434506995,36.808211861376],
+        description: "Cancer Treatment and Laboratory services",
+        locale: "Upper Hill, Opposite Traffic Police Headquarters, Nairobi"
+      },
+	   {
+        name: "Tenwek Mission Hospital",
+        Lat_Long: [-0.7404455456816815, 35.360012147832535],
+        description: "The hospital offers services such asd Chemotherapy and Surgical Oncology",
+        locale: "Silibwet Township Bomet Central"
+      },
+	  {
+        name: "Prime Cancercare Clinic",
+        Lat_Long: [ -1.2955639225187994,36.80656804934996],
+        description: "The clinic focuses on colon cancer, stomach cancer, pancreas, lung cancer, liver and bile duct cancer, breast cancer and lymphoma.",
+        locale: "Prof Nelson Awori Centre, 5th Floor, Suite A1, Nairobi"
+      },
+	{
+        name: "Karen Hospital",
+        Lat_Long: [-1.0752130496460535, 36.67949594228415],
+        description: "The hospital provides oncology consultation to both outpatient and inpatient. The hospital focuses on breast cancer, gastrointestinal cancer, lung cancer, uro-oncology, Haematology, cervical cancer, ovarian cancer and prostrate cancer. Treatments offered by the hospital includes chemotherapy, Blood and blood product transfusion, palliative care and Pain management.",
+        locale: "Langata Rd, Nairobi"
+      },  
+      {
+        name: "Coptic Hospital-Main Hospital",
+        Lat_Long: [ -1.2303837180357913, 36.79021697877171],
+        description: " The hospital has a modern chemotherapy unit equipped with chemo shield machines for the administration of chemotherapy to cancer patients.The hospital also offer counselling and nutrition services for patients, their relatives and friends. Patients are assured to acquire the highest international standards of chemotherapy treatment.",
+        locale: "Ngong Rd, Nairobi"
+      },
+      {
+        name: "Mombasa Cancer Centre",
+        Lat_Long: [ -4.066230718715583,39.67008158878112],
+        description: "Mombasa Cancer Centre offers screening services for different types of cancer.",
+        locale: "Nyerere Ave, Mombasa"
+      },
+	  {
+	  name: "International Cancer Institute",
+        Lat_Long: [  0.5049688837025588,35.2976765916679],
+        description: "It is  fully-fledged, full service anatomic and clinical pathology lab offering intensive, customised and technology-based routine testing.",
+        locale: "Nandi Road, Eldoret"
+		},
+		{
+        name: "Women For Cancer Early Detection & Treatment",
+        Lat_Long: [ -1.2865146941639631, 36.793599391677205],
+        description: "It is an NGO that was formed in 2012 to coordinate and facilitate early detection of cancer through free screening camps for the underprivileged women.",
+        locale: "Bublica Centre, Dennis Pritt Road, Nairobi"
+      },
+	  {
+        name: "HCGCCK Cancer Centre",
+        Lat_Long: [ -1.262302000309726, 36.812423089822374],
+        description: "Cancer treatment center",
+        locale: "Shivachi Road, Parklands, Nairobi"
+      },
+	   {
+        name: "Imani Cancer Centre",
+        Lat_Long: [-0.9166632831704622, 37.04312282587496],
+        description: "Cancer Treatment Center in Thika for all your diagnosis and treatment of cancer types with a dedicated and professional group of doctors",
+        locale: "Mugo Kibiru road, Thika"
+      },
+	  {
+        name: "Nairobi Pathology and Diagnostic Center",
+        Lat_Long: [-1.2867350304295238,36.828188288623856],
+        description: "Nairobi Pathology & Allied Services conducts cancer screening for different types of cancer at affordable costs.",
+        locale: "Afya Center, Nairobi"
+      },
+	  	  {
+        name: "Mater Hospital",
+        Lat_Long: [-1.2866488644523828, 36.82737086611821],
+        description: "It is a private healthcare facility that offers general cancer management services, leukaemia, breast, cervical and prostate cancer screening and surgery for malignant tumours.",
+        locale: "Spread throughout Nairobi"
+      },
+	    {
+        name: "The Nairobi Hospital",
+        Lat_Long: [ -1.289737316816476, 36.789433494280885],
+        description: "The hospital features a cancer treatment centre that houses a team that provides seamless care needed in the diagnosis of cancer investigation, surgery, treatment, nursing, rehabilitation, palliation and supportive care for different types of cancer such as prostate, ovarian, breast, hepatoma, pancreatic, brain tumour, skin, head and neck tumours.",
+        locale: "Argwings Kodhek Road, Nairobi"
+      },
+	    {
+        name: "Kijabe Mission Hospital",
+        Lat_Long: [  -0.9462356341208914, 36.59485644907267],
+        description: "Cancer treatment center",
+        locale: "Kijabe Town, Kiambu"
+      },
+	  {
+        name: "Aga Khan University Hospital",
+        Lat_Long: [-1.2611760927088604, 36.8240248615262],
+        description: "It is a private health facility that provides cancer screening programmes, specialised diagnostics, palliative care, chemotherapy and radiotherapy treatment.",
+        locale: "3rd Parklands Avenue, Nairobi"
+      },
+	   {
+        name: "Kenyatta National Hospital",
+        Lat_Long: [ -1.30111865549764, 36.80693624749534],
+        description: "It is Kenya’s biggest referral hospital It mainly offers cancer screening, diagnosis, chemotherapy and palliative care.",
+        locale: "Hospital Road, Nairobi"
+		},
+		{
+        name: "M.P Shah Hospital",
+        Lat_Long: [-1.2633327315255465, 36.812118649349756],
+        description: "It is a modern 210-bed facility that offers cancer screening, diagnosis, chemotherapy and radiotherapy treatment.",
+        locale: "Hospital Road, Nairobi"
+		},
+		 {
+        name: "Moi Teaching & Referral Hospital",
+        Lat_Long: [ 0.5132507041946607, 35.28043408517466],
+        description: "It offers cancer screening, diagnosis, chemotherapy and radiotherapy treatment.",
+        locale: "Nandi Road, Eldoret Town"
+      },
+	    {
+        name: "Nairobi Hospice",
+        Lat_Long: [  -1.2988653675432056, 36.80860090489079],
+        description: "It mainly provides outpatient and home-based care palliative care for cancer and other terminal illnesses.",
+        locale: "Hospital Road, Nairobi"
+      },
+	   {
+        name: "Nairobi Radiotherapy Center",
+        Lat_Long: [-1.2962522768910982,36.79687422045155],
+        description: "This is one of the leading healthcare centres for comprehensive cancer treatment in Nairobi.",
+        locale: "Kindaruma Road, Kilimani, Nairobi"
+      },
+    ];
+
+    // Initialize the Leaflet map
+    const map = L.map("map").setView([-1.2921, 36.8219],15); // Set default center and zoom level
+
+    // Add a tile layer to the map
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
+    // Add markers for each cancer treatment center
+    centers.forEach(center => {
+      const marker = L.marker(center. Lat_Long).addTo(map);
+      const popupContent = `
+        <h2>${center.name}</h2>
+        <p><strong> Lat_Long:</strong> ${center. Lat_Long[0]}, ${center. Lat_Long[1]}</p>
+        <p><strong>About:</strong> ${center.description}</p>
+        <p><strong>locale:</strong> ${center.locale}</p>
+      `;
+      marker.bindPopup(popupContent);
+    });
+  </script>
+</body>
+
+</html>
